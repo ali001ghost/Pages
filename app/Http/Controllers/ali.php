@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-class ali extends Controller
+class alit extends Controller
 {
-    //
+    //hcbsjdhb
 }
