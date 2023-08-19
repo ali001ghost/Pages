@@ -62,4 +62,15 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-}
+
+
+    public function questions()
+    {
+        return $this->hasMany(opinion::class,'user_id');
+    }
+
+    public function questionsusers()
+    {
+        return $this->belongsToMany(question::class,'question_users','user_id');
+
+}}

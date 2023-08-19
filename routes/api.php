@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\IllnessController;
+use App\Http\Controllers\MediaController;
+use App\Http\Controllers\OpinionController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuestionUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 
@@ -8,4 +13,14 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('register', 'register');
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
+    Route::get('getIllnesses', [IllnessController::class, 'getIllnesses']);
+    Route::get('getQuestions', [QuestionController::class, 'getQuestions']);
+    Route::post('addOpinion', [OpinionController::class, 'addOpinion']);
+    Route::post('acceptOpinion', [OpinionController::class, 'acceptOpinion']);
+    Route::get('getOpinion', [OpinionController::class, 'getOpinion']);
+    Route::post('upload', [MediaController::class, 'upload']);
+    Route::post('answer', [QuestionUserController::class, 'answer']);
+
+
+
 });
