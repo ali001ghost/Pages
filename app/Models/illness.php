@@ -13,7 +13,10 @@ class illness extends Model
     {
         return $this->hasMany(question::class,'illnesses_id');
     }
-
+    public function users()
+    {
+        return $this->belongsToMany(User::class,'user_illnesses','illnesses_id');
+    }
     public function media()
     {
         return $this->hasMany(media::class,'illnesses_id');

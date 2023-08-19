@@ -10,32 +10,35 @@ class OpinionController extends Controller
 {
 
 
-    public function addOpinion(Request $request) {
+    public function addOpinion(Request $request)
+    {
         $result = opinion::query()->create([
-            'opinion'=>$request->opinion,
-            'user_id'=>Auth::user()->id,
+            'opinion' => $request->opinion,
+            'user_id' => Auth::user()->id,
 
         ]);
         return response()->json([
             'success',
-            'data'=>'opinion added successfully'
+            'data' => 'opinion added successfully'
         ]);
     }
-    public function acceptOpinion(Request $request) {
+    public function acceptOpinion(Request $request)
+    {
         $result = opinion::query()
-        ->where('id',$request->id)
-        ->update([
-            'status'=>'yes',
-        ]);
+            ->where('id', $request->id)
+            ->update([
+                'status' => 'yes',
+            ]);
         return response()->json([
             'success',
-            'data'=>'opinion accepted successfully'
+            'data' => 'opinion accepted successfully'
         ]);
     }
-    public function getOpinion(Request $request) {
+    public function getOpinion(Request $request)
+    {
         $result = Opinion::query()
             ->orderBy('created_at', 'desc')
-            ->where('status','yes')->with('users:id,name')
+            ->where('status', 'yes')->with('users:id,name')
             ->get();
 
         return response()->json([
@@ -43,5 +46,4 @@ class OpinionController extends Controller
             'data' => $result
         ]);
     }
-    }
-
+}

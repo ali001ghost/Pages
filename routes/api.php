@@ -5,6 +5,7 @@ use App\Http\Controllers\MediaController;
 use App\Http\Controllers\OpinionController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuestionUserController;
+use App\Http\Controllers\UserIllnessesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 
@@ -20,6 +21,8 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('getOpinion', [OpinionController::class, 'getOpinion']);
     Route::post('upload', [MediaController::class, 'upload']);
     Route::post('answer', [QuestionUserController::class, 'answer']);
+    Route::get('showPercentage/{illnessesId}', [QuestionUserController::class, 'showPercentage']);
+    Route::get('getmedia', [UserIllnessesController::class, 'getmedia']);
 
 
 

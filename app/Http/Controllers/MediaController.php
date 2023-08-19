@@ -24,7 +24,7 @@ class MediaController extends Controller
             'vedio'=>$vedio,
             'advice'=>$request->advice,
             'illnesses_id'=>$request->illnesses_id
-
+            ,'rate'=>$request->rate
         ]);
         return response()->json([
             'success',

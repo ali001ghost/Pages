@@ -14,7 +14,7 @@ class media extends Model
 
 
 
-    protected $fillable=['book','vedio','advice','illnesses_id'];
+    protected $fillable=['book','vedio','advice','illnesses_id','rate'];
 
     public function illnesses()
     {
