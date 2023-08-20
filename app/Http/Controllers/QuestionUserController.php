@@ -74,6 +74,13 @@ class QuestionUserController extends Controller
             $illnessName = $illness->name;
 
             if ($totalPercentage > 0 && $totalPercentage < 50) {
+                $result = userIllnesses::query()->updateOrCreate([
+                    'user_id' => $userId,
+                    'illnesses_id' => $illnessesId
+
+                ],
+['percentage'=>$totalPercentage]
+            );
                 return response()->json([
                     'success' => true,
                     'data' => 'Illness: ' . $illnessName . ', Percentage: ' . $totalPercentage . '%'
@@ -89,7 +96,7 @@ class QuestionUserController extends Controller
 
                 return response()->json([
                     'success' => true,
-                    'data' => 'Illness: ' . $illnessName . ', Percentage: ' . $totalPercentage . '%'
+                    'data' => 'Illness: ' . $illnessName . ', Percentage: ' . $totalPercentage . '%' .', you need to doctor'
                 ]);
             } else {
                 return response()->json([

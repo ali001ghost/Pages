@@ -46,4 +46,17 @@ class OpinionController extends Controller
             'data' => $result
         ]);
     }
+
+    public function getNOOpinion(Request $request)
+    {
+        $result = Opinion::query()
+            ->orderBy('created_at', 'desc')
+            ->where('status', 'no')
+            ->get();
+
+        return response()->json([
+            'success',
+            'data' => $result
+        ]);
+    }
 }

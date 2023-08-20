@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Helpers;
 
+use App\Models\book;
 use App\Models\media;
 use Illuminate\Http\Request;
 
@@ -24,16 +25,31 @@ class MediaController extends Controller
             'vedio'=>$vedio,
             'advice'=>$request->advice,
             'illnesses_id'=>$request->illnesses_id
-            ,'rate'=>$request->rate
+            ,'status'=>$request->status
         ]);
+
+        $book=book::query()->create([
+            'name'=>$request->name,
+            'book'=>$path,
+            'description'=>$request->description
+
+        ]);
+
         return response()->json([
             'success',
             'data'=>$result
+            ,'book'=>$book
         ],200);
 }
 
-public function getMedia(Request $request)  {
+public function getBook(Request $request)
+{
+    $books = Book::inRandomOrder()->get();
 
+    return response()->json([
+        'success' => true,
+        'data' => $books
+    ], 200);
 }
 
 

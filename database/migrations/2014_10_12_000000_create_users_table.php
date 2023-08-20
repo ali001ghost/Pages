@@ -18,10 +18,10 @@ return new class extends Migration
             $table->integer('age');
             $table->string('gender');
             $table->string('phone_number')->unique();
+            $table->enum('role_id', ['1','0']);
 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('status')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

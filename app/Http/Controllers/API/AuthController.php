@@ -49,6 +49,7 @@ class AuthController extends Controller
             'age' => 'required|integer',
             'gender' => 'required|string',
             'phone_number' => 'required|string',
+
         ]);
 
         $user = User::create([
@@ -58,13 +59,14 @@ class AuthController extends Controller
             'age' =>  $request->age,
             'gender' =>  $request->gender,
             'phone_number' => $request->phone_number,
+            'role_id'=>$request->role_id,
         ]);
 
         $token = Auth::attempt([
             'email' => $request->email,
             'password' => $request->password,
         ]);
-    
+
         return response()->json([
             'message' => 'User created successfully',
             'user' => $user,
