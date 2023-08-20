@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class illness extends Model
 {
     use HasFactory;
+    protected $fillable = ['name', 'description', 'question_count'];
 
     public function questions()
     {

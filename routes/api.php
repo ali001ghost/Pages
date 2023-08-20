@@ -8,8 +8,10 @@ use App\Http\Controllers\QuestionUserController;
 use App\Http\Controllers\UserIllnessesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\UserProfileController;
 
-Route::controller(AuthController::class)->group(function () {
+Route::controller(AuthController::class)->group(function () 
+{
     Route::post('login', 'login');
     Route::post('register', 'register');
     Route::post('logout', 'logout');
@@ -23,7 +25,9 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('answer', [QuestionUserController::class, 'answer']);
     Route::get('showPercentage/{illnessesId}', [QuestionUserController::class, 'showPercentage']);
     Route::get('getmedia', [UserIllnessesController::class, 'getmedia']);
-
+    Route::get('show_profile', [UserProfileController::class,'show']);
+    Route::post('update_profile', [UserProfileController::class,'update']);
+    Route::delete('delete_account', [UserProfileController::class,'deleteAccount']);
 
 
 });
