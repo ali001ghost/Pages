@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AuthAdminController;
 use App\Http\Controllers\IllnessController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\OpinionController;
@@ -37,6 +38,8 @@ Route::controller(AuthController::class)->group(function ()
     Route::post('update_profile', [UserProfileController::class,'update']);
     Route::delete('delete_account', [UserProfileController::class,'deleteAccount']);
     Route::get('getbook', [MediaController::class,'getbook']);
-
-
+    Route::post('Adminregister',[AuthAdminController::class,'register']);
+    Route::post('Adminlogin',[AuthAdminController::class,'login']);
+    Route::post('Adminlogout',[AuthAdminController::class,'logout']);
+    Route::post('insert_illness',[IllnessController::class,'insert_illness']);
 });

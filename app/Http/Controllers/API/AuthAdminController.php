@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class AuthController extends Controller
+class AuthAdminController extends Controller
 {
     public function __construct()
     {
@@ -24,20 +24,34 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         $token = Auth::attempt($credentials);
 
-        if (!$token) {
+        if ($token) 
+        {
+
+                $user = Auth::user();
+                session(['user' => $user]);
+                    if (Auth::user()->role_id == 2) 
+                    {
+                        return response()->json([
+                            'message' => 'You are Not Admin',
+                        ], 401);
+                    } 
+                    elseif(Auth::user()->role_id == 1) {
+
+                    return response()->json([
+                        'user' => $user,
+                        'authorization' => [
+                        'token' => $token,
+                        'type' => 'bearer',
+                        ]
+                    ]);
+                }
+        }else{
             return response()->json([
-                'message' => 'Unauthorized',
+                'message' => 'Unauthenticated',
             ], 401);
+
         }
 
-        $user = Auth::user();
-        return response()->json([
-            'user' => $user,
-            'authorization' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ]
-        ]);
     }
 
     public function register(Request $request)
@@ -58,7 +72,7 @@ class AuthController extends Controller
             'age' =>  $request->age,
             'gender' =>  $request->gender,
             'phone_number' => $request->phone_number,
-           // 'role_id'=>$request->role_id,
+            'role_id'=> 1 ,
         ]);
 
         $token = Auth::attempt([
@@ -67,7 +81,7 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'User created successfully',
+            'message' => 'Admin created successfully',
             'user' => $user,
             'authorization' => [
                 'token' => $token,
@@ -80,14 +94,14 @@ class AuthController extends Controller
     {
         Auth::logout();
         return response()->json([
-            'message' => 'Successfully logged out',
+            ['message' => 'Successfully logged out'],
         ]);
     }
 
     public function refresh()
     {
         return response()->json([
-            'user' => Auth::user(),
+            'Admin' => Auth::user(),
             'authorisation' => [
                 'token' => Auth::refresh(),
                 'type' => 'bearer',

@@ -83,4 +83,8 @@ public function illnesses()
     {
         return $this->belongsToMany(illness::class,'user_illnesses','user_id');
     }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 }
