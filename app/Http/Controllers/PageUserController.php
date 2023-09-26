@@ -19,12 +19,9 @@ class PageUserController extends Controller
                 'isadmin' => 0,
                 'isblocked' => 0,
             ]);
-        if (!$result) {
-            return response()->json([
-                $data ='Failed',
-            ],400);
 
-        }
+
+
         return ResponseHelper::success(['user added successfully']);
 
     }
@@ -99,8 +96,7 @@ public function updatedate(Request $request)
             'discount_percentage'=>$request->discount_percentage
         ]);
 
-        return ResponseHelper::updated([]);
-    }
+        return ResponseHelper::updated(['updated'],);    }
 
 
 }
