@@ -11,8 +11,7 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    {        $this->call(illnessesSeeder::class);
-        $this->call(quistionsSeeder::class);
+    {
 
         // \App\Models\User::factory(10)->create();
 
@@ -20,5 +19,6 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        $this->call(pagetype::class);
     }
 }

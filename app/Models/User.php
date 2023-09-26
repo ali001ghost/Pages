@@ -22,10 +22,7 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
-        'age',
-        'gender',
-        'phone_number',
-        'role_id'
+
 
     ];
 
@@ -69,22 +66,27 @@ class User extends Authenticatable implements JWTSubject
     }
 
 
-    public function questions()
+    public function page()
     {
-        return $this->hasMany(opinion::class,'user_id');
+        return $this->hasMany(page::class,);
+    }
+    public function pageuser()
+    {
+        return $this->hasMany(pageUser::class,);
+    }
+    public function friend()
+    {
+        return $this->hasMany(friend::class,'sender_id','reciver_id');
+    }
+    public function invite()
+    {
+        return $this->hasMany(invite::class,'sender_id','reciver_id');
     }
 
-    public function questionsusers()
+    public function invoice()
     {
-        return $this->belongsToMany(question::class,'question_users','user_id');
+        return $this->hasMany(product::class,'user_id');
+    }
 
-}
-public function illnesses()
-    {
-        return $this->belongsToMany(illness::class,'user_illnesses','user_id');
-    }
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
+
 }

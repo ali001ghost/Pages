@@ -46,19 +46,14 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|min:8',
-            'age' => 'required|integer',
-            'gender' => 'required|string',
-            'phone_number' => 'required|string',
+
 
         ]);
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'age' =>  $request->age,
-            'gender' =>  $request->gender,
-            'phone_number' => $request->phone_number,
-           // 'role_id'=>$request->role_id,
         ]);
 
         $token = Auth::attempt([

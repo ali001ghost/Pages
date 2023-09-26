@@ -1,9 +1,14 @@
 <?php
-
+use App\Http\Middleware\LanguageMiddleware;
 use App\Http\Controllers\API\AuthAdminController;
+use App\Http\Controllers\FriendController;
 use App\Http\Controllers\IllnessController;
+use App\Http\Controllers\InviteController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\OpinionController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\PageUserController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuestionUserController;
 use App\Http\Controllers\UserIllnessesController;
@@ -12,34 +17,62 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\UserProfileController;
 
 Route::controller(AuthController::class)->group(function ()
-{Route::group(['middleware' => 'auth:api'], function () {
-    Route::group(
-        ['middleware' => 'CheckRole'],
-        function () {
+{
 
-            Route::post('upload', [MediaController::class, 'upload']);
-            Route::post('acceptOpinion', [OpinionController::class, 'acceptOpinion']);
-            Route::get('getNOOpinion', [OpinionController::class, 'getNOOpinion']);
+            Route::group(
+                ['middleware' => 'LanguageMiddleware'],
+                function () {
+                    Route::get('getProducts',[PageUserController::class,'getProducts']);
+                    Route::post('addProduct',[ProductController::class,'addProduct']);
+                    Route::post('store',[PageController::class,'store']);
 
-          }
-);});
+                    Route::group(['middleware' => 'auth:api'], function () {
+                        Route::group(
+                            ['middleware' => 'CheckIsAdminForPageMiddleware'],
+                            function () {
+                                Route::post('store/user',[PageUserController::class,'store']);
+                                Route::get('count',[PageUserController::class,'count']);
+                                Route::post('block',[PageController::class,'block']);
+
+
+                         });});
+
+
+                         Route::post('updatedate',[PageUserController::class,'updatedate']);
+
+                         Route::group(['middleware' => 'auth:api'], function () {
+                            Route::group(
+                                ['middleware' => 'CheckFriendshipStatus'],
+                                function () {
+                                    Route::post('invite',[InviteController::class,'invite']);
+
+                             });});
+
+
+
+
+    Route::post('addfriend',[FriendController::class,'addfriend']);
+    Route::post('acceptfriend',[FriendController::class,'acceptfriend']);
+    Route::delete('deletefriendrequest',[FriendController::class,'deletefriendrequest']);
+    Route::get('showfriendrecive',[FriendController::class,'showfriendrecive']);
+
+    Route::post('acceptinvite',[InviteController::class,'acceptinvite']);
+    Route::post('buy',[InviteController::class,'buy']);
+    Route::post('deleteinvite',[InviteController::class,'deleteinvite']);
+    Route::get('getinvite',[InviteController::class,'getinvite']);
+    Route::get('getboughtinfo',[InviteController::class,'getboughtinfo']);
+    Route::get('getinvitepercentageinfo',[InviteController::class,'getinvitepercentageinfo']);
+
+
+
+
+             });
+
+
     Route::post('login', 'login');
     Route::post('register', 'register');
     Route::post('logout', 'logout');
-    Route::post('refresh', 'refresh');
-    Route::get('getIllnesses', [IllnessController::class, 'getIllnesses']);
-    Route::get('getQuestions', [QuestionController::class, 'getQuestions']);
-    Route::post('addOpinion', [OpinionController::class, 'addOpinion']);
-    Route::get('getOpinion', [OpinionController::class, 'getOpinion']);
-    Route::post('answer', [QuestionUserController::class, 'answer']);
-    Route::get('showPercentage/{illnessesId}', [QuestionUserController::class, 'showPercentage']);
-    Route::get('getmedia', [UserIllnessesController::class, 'getmedia']);
-    Route::get('show_profile', [UserProfileController::class,'show']);
-    Route::post('update_profile', [UserProfileController::class,'update']);
-    Route::delete('delete_account', [UserProfileController::class,'deleteAccount']);
-    Route::get('getbook', [MediaController::class,'getbook']);
-    Route::post('Adminregister',[AuthAdminController::class,'register']);
-    Route::post('Adminlogin',[AuthAdminController::class,'login']);
-    Route::post('Adminlogout',[AuthAdminController::class,'logout']);
-    Route::post('insert_illness',[IllnessController::class,'insert_illness']);
+
+
+
 });
